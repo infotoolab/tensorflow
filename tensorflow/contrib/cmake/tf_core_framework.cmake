@@ -180,7 +180,9 @@ add_custom_command(OUTPUT
     ${VERSION_INFO_CC}
     COMMAND ${PYTHON_EXECUTABLE} ${tensorflow_source_dir}/tensorflow/tools/git/gen_git_source.py
     --raw_generate ${VERSION_INFO_CC}
-    DEPENDS __force_rebuild)
+    DEPENDS __force_rebuild
+	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../../
+	)
 
 set(tf_version_srcs ${tensorflow_source_dir}/tensorflow/core/util/version_info.cc)
 

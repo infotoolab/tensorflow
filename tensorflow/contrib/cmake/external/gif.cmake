@@ -14,7 +14,6 @@ set(gif_HEADERS
 if(WIN32)
 
   set(gif_STATIC_LIBRARIES ${gif_INSTALL}/lib/giflib.lib)
-  message(CMAKE_CURRENT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} ${gif_BUILD})
   ExternalProject_Add(gif
       PREFIX gif
       URL ${gif_URL}

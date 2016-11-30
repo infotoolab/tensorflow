@@ -13,3 +13,4 @@ node_modules
 *.pyc
 __pycache__
 *.swp
+/tensorflow/core/util/version_info.cc

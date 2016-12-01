@@ -223,10 +223,7 @@ def raw_generate(output_file):
     output_file: Output filename for the version info cc
   """
 
-  print(os.getcwd())
   git_version = get_git_version(".")
-  print("git_version:")
-  print(git_version)
   write_version_info(output_file, git_version)
 
 

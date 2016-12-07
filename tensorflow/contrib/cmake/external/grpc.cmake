@@ -5,16 +5,24 @@ set(GRPC_URL https://github.com/grpc/grpc.git)
 set(GRPC_BUILD ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc)
 set(GRPC_TAG 3bc78cd0b5bd784a235c01612d634b1ec5f8fb97)
 
+
 if(WIN32)
   set(grpc_STATIC_LIBRARIES
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/grpc++_unsecure.lib
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/grpc_unsecure.lib
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/gpr.lib)
 else()
-  set(grpc_STATIC_LIBRARIES
+  if(CMAKE_BUILD_TYPE)
+	  set(grpc_STATIC_LIBRARIES
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgrpc++_unsecure.a
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgrpc_unsecure.a
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgpr.a)
+  else()
+    set(grpc_STATIC_LIBRARIES
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgrpc++_unsecure.a
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgrpc_unsecure.a
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgpr.a)
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgpr.a)s
+  endif()
 endif()
 
 ExternalProject_Add(grpc

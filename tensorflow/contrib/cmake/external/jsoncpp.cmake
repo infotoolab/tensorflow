@@ -11,7 +11,11 @@ set(jsoncpp_INCLUDES ${jsoncpp_BUILD})
 if(WIN32)
   set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/$<CONFIG>/jsoncpp.lib)
 else()
-  set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/$<CONFIG>/libjsoncpp.a)
+  if(CMAKE_BUILD_TYPE)
+	set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/libjsoncpp.a)
+  else()
+    set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/$<CONFIG>/libjsoncpp.a)
+  endif()
 endif()
 # We only need jsoncpp.h in external/jsoncpp/jsoncpp/jsoncpp.h
 # For the rest, we'll just add the build dir as an include dir.

@@ -21,7 +21,7 @@ else()
     set(grpc_STATIC_LIBRARIES
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgrpc++_unsecure.a
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgrpc_unsecure.a
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgpr.a)s
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgpr.a)
   endif()
 endif()
 

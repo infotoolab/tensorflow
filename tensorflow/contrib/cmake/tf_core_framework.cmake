@@ -125,17 +125,19 @@ file(GLOB_RECURSE tf_core_lib_srcs
 
 file(GLOB tf_core_platform_srcs
     "${tensorflow_source_dir}/tensorflow/core/platform/*.h"
-    "${tensorflow_source_dir}/tensorflow/core/platform/*.cc"
-    "${tensorflow_source_dir}/tensorflow/core/platform/default/*.h"
-    "${tensorflow_source_dir}/tensorflow/core/platform/default/*.cc")
+"${tensorflow_source_dir}/tensorflow/core/platform/*.cc")
 list(APPEND tf_core_lib_srcs ${tf_core_platform_srcs})
+
+file(GLOB tf_core_platform_default_srcs
+"${tensorflow_source_dir}/tensorflow/core/platform/default/*.h"
+"${tensorflow_source_dir}/tensorflow/core/platform/default/*.cc")
 
 if(UNIX)
   file(GLOB tf_core_platform_posix_srcs
       "${tensorflow_source_dir}/tensorflow/core/platform/posix/*.h"
       "${tensorflow_source_dir}/tensorflow/core/platform/posix/*.cc"
   )
-  list(APPEND tf_core_lib_srcs ${tf_core_platform_posix_srcs})
+  set(tf_core_lib_platform_srcs ${tf_core_platform_posix_srcs})
 endif(UNIX)
 
 if(WIN32)
@@ -145,7 +147,7 @@ if(WIN32)
       "${tensorflow_source_dir}/tensorflow/core/platform/posix/error.h"
       "${tensorflow_source_dir}/tensorflow/core/platform/posix/error.cc"
   )
-  list(APPEND tf_core_lib_srcs ${tf_core_platform_windows_srcs})
+  set(tf_core_lib_platform_srcs ${tf_core_platform_windows_srcs})
 endif(WIN32)
 
 if(tensorflow_ENABLE_SSL_SUPPORT)
@@ -165,9 +167,18 @@ file(GLOB_RECURSE tf_core_lib_test_srcs
     "${tensorflow_source_dir}/tensorflow/core/public/*test*.h"
 )
 list(REMOVE_ITEM tf_core_lib_srcs ${tf_core_lib_test_srcs})
+list(REMOVE_ITEM tf_core_lib_platform_srcs ${tf_core_lib_test_srcs})
+list(REMOVE_ITEM tf_core_platform_default_srcs ${tf_core_lib_test_srcs})
+
 
 add_library(tf_core_lib OBJECT ${tf_core_lib_srcs})
+add_library(tf_core_lib_platform OBJECT ${tf_core_lib_platform_srcs})
+add_library(tf_core_lib_default OBJECT ${tf_core_platform_default_srcs})
+add_dependencies(tf_core_lib_platform ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)
+add_dependencies(tf_core_lib_default ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)
 add_dependencies(tf_core_lib ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)
+add_dependencies(tf_core_lib tf_core_lib_platform)
+add_dependencies(tf_core_lib tf_core_lib_default)
 
 # Tricky setup to force always rebuilding
 # force_rebuild always runs forcing ${VERSION_INFO_CC} target to run

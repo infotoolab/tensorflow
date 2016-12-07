@@ -12,9 +12,9 @@ if(WIN32)
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/gpr.lib)
 else()
   set(grpc_STATIC_LIBRARIES
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgrpc++_unsecure.a
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgrpc_unsecure.a
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgpr.a)
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgrpc++_unsecure.a
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgrpc_unsecure.a
+      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/$<CONFIG>/libgpr.a)
 endif()
 
 ExternalProject_Add(grpc

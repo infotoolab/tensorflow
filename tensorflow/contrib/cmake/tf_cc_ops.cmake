@@ -47,10 +47,14 @@ foreach(tf_cc_op_lib_name ${tf_cc_op_lib_names})
     # registered (static initializers dropped by the linker because the ops
     # are not used explicitly in the *_gen_cc executables).
     add_executable(${tf_cc_op_lib_name}_gen_cc
+		${CMAKE_CURRENT_SOURCE_DIR}/dummy.cpp
         $<TARGET_OBJECTS:tf_cc_op_gen_main>
         $<TARGET_OBJECTS:tf_${tf_cc_op_lib_name}>
+		$<TARGET_OBJECTS:tf_core_lib_default>
+		$<TARGET_OBJECTS:tf_core_lib_platform>
         $<TARGET_OBJECTS:tf_core_lib>
         $<TARGET_OBJECTS:tf_core_framework>
+		
     )
 
     target_link_libraries(${tf_cc_op_lib_name}_gen_cc PRIVATE

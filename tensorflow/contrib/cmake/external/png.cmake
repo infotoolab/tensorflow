@@ -9,7 +9,7 @@ set(png_INSTALL ${CMAKE_BINARY_DIR}/png/install)
 if(WIN32)
   set(png_STATIC_LIBRARIES ${CMAKE_BINARY_DIR}/png/install/lib/libpng12_static.lib)
 else()
-  set(png_STATIC_LIBRARIES ${CMAKE_BINARY_DIR}/png/install/lib/libpng12.a)
+  set(png_STATIC_LIBRARIES ${CMAKE_BINARY_DIR}/png/install/lib/libpng12$<$<CONFIG:Debug>:d>.a)
 endif()
 
 set(png_HEADERS

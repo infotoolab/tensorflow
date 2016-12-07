@@ -10,7 +10,10 @@ set(proto_text "proto_text")
 
 add_executable(${proto_text}
     ${tf_tools_srcs}
+    $<TARGET_OBJECTS:tf_core_lib_platform>
+    $<TARGET_OBJECTS:tf_core_lib_default>
     $<TARGET_OBJECTS:tf_core_lib>
+	
 )
 
 target_link_libraries(${proto_text} PUBLIC

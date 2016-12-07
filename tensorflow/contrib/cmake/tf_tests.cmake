@@ -324,6 +324,8 @@ if (tensorflow_BUILD_CC_TESTS)
   # this is giving to much objects and libraries to the linker but
   # it makes this script much easier. So for now we do it this way.
   set(tf_obj_test
+  	$<TARGET_OBJECTS:tf_core_lib_default>
+	$<TARGET_OBJECTS:tf_core_lib_platform>
     $<TARGET_OBJECTS:tf_core_lib>
     $<TARGET_OBJECTS:tf_core_cpu>
     $<TARGET_OBJECTS:tf_core_framework>

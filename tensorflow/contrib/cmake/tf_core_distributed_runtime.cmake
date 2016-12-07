@@ -29,6 +29,8 @@ set(grpc_tensorflow_server_srcs
 
 add_executable(grpc_tensorflow_server
     ${grpc_tensorflow_server_srcs}
+	$<TARGET_OBJECTS:tf_core_lib_default>
+	$<TARGET_OBJECTS:tf_core_lib_platform>
     $<TARGET_OBJECTS:tf_core_lib>
     $<TARGET_OBJECTS:tf_core_cpu>
     $<TARGET_OBJECTS:tf_core_framework>

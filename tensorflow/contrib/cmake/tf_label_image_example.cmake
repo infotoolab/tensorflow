@@ -4,6 +4,8 @@ set(tf_label_image_example_srcs
 
 add_executable(tf_label_image_example
     ${tf_label_image_example_srcs}
+	$<TARGET_OBJECTS:tf_core_lib_default>
+	$<TARGET_OBJECTS:tf_core_lib_platform>
     $<TARGET_OBJECTS:tf_core_lib>
     $<TARGET_OBJECTS:tf_core_cpu>
     $<TARGET_OBJECTS:tf_core_framework>

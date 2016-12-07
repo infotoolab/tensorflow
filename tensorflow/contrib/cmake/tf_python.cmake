@@ -439,6 +439,8 @@ function(GENERATE_PYTHON_OP_LIB tf_python_op_lib_name)
     add_executable(${tf_python_op_lib_name}_gen_python
         $<TARGET_OBJECTS:tf_python_op_gen_main>
         $<TARGET_OBJECTS:tf_${tf_python_op_lib_name}>
+		$<TARGET_OBJECTS:tf_core_lib_default>
+		$<TARGET_OBJECTS:tf_core_lib_platform>
         $<TARGET_OBJECTS:tf_core_lib>
         $<TARGET_OBJECTS:tf_core_framework>
         ${GENERATE_PYTHON_OP_LIB_ADDITIONAL_LIBRARIES}

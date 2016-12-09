@@ -19,7 +19,11 @@ if(WIN32)
   set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/highwayhash.lib)
 else()
   set(highwayhash_HEADERS "${highwayhash_BUILD}/highwayhash/*.h")
-  set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/libhighwayhash.a)
+  if(CMAKE_BUILD_TYPE)
+    set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/libhighwayhash.a)
+  else()
+	set(highwayhash_STATIC_LIBRARIES ${highwayhash_BUILD}/$<CONFIG>/libhighwayhash.a)  
+  endif()	
 endif()
 
 ExternalProject_Add(highwayhash

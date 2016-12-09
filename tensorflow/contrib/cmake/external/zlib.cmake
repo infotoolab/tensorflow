@@ -10,7 +10,7 @@ if(WIN32)
   set(zlib_STATIC_LIBRARIES
       ${CMAKE_CURRENT_BINARY_DIR}/zlib/install/lib/zlibstatic.lib)
 else()
-  if(CMAKE_BUILT_TYPE)
+  if(CMAKE_BUILD_TYPE)
 	  set(zlib_STATIC_LIBRARIES
 	      ${CMAKE_CURRENT_BINARY_DIR}/zlib/src/zlib/libz.a)
   else()
@@ -32,9 +32,7 @@ ExternalProject_Add(zlib
     INSTALL_DIR ${ZLIB_INSTALL}
     BUILD_IN_SOURCE 1
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
-	CMAKE_ARGS -DCMAKE_RANLIB=/usr/bin/true
     CMAKE_CACHE_ARGS
-	-DCMAKE_RANLIB=/usr/bin/true
         -DCMAKE_BUILD_TYPE:STRING=Release
         -DCMAKE_INSTALL_PREFIX:STRING=${ZLIB_INSTALL}
 	-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON

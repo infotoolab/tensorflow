@@ -79,7 +79,11 @@ typedef mutex_lock shared_lock;
 // Catch bug where variable name is omitted, e.g. shared_lock (mu);
 #define shared_lock(x) static_assert(0, "shared_lock_decl_missing_var_name");
 
+#ifdef STREAM_EXECUTOR_USE_SHARED_MUTEX
+using condition_variable = std::condition_variable_any;
+#else
 using std::condition_variable;
+#endif
 
 inline ConditionResult WaitForMilliseconds(mutex_lock* mu,
                                            condition_variable* cv, int64 ms) {

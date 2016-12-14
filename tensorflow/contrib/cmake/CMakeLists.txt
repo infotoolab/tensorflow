@@ -66,7 +66,7 @@ if(WIN32)
 endif()
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-  set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fno-exceptions -std=c++11")
+  set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fno-exceptions -std=c++14")
 endif()
 
 # External dependencies
@@ -157,12 +157,14 @@ if (tensorflow_ENABLE_GPU)
 
     # add cudnn
     include_directories(${CUDNN_HOME})
-	if(UNIX)
-		set(CUDNN_HOME ${CUDA_TOOLKIT_TARGET_DIR})
-	endif()
+	include_directories(${CUDA_TOOLKIT_TARGET_DIR}/../)
+	include_directories(${CUDA_TOOLKIT_TARGET_DIR}/include)
 	
-	set(CUDA_LIBRARIES ${CUDA_LIBRARIES} ${CUDNN_HOME}/lib/x64/cudnn.lib)
-
+	if(WIN32)
+		set(CUDA_LIBRARIES ${CUDA_LIBRARIES} ${CUDNN_HOME}/lib/x64/cudnn.lib)
+	else()
+		set(CUDA_LIBRARIES ${CUDA_LIBRARIES} ${CUDA_TOOLKIT_TARGET_DIR}/lib64/libcudnn_static.a)
+	endif()
     # create cuda_config.h
     FILE(WRITE ${tensorflow_source_dir}/third_party/gpus/cuda/cuda_config.h
       "#ifndef CUDA_CUDA_CONFIG_H_\n"

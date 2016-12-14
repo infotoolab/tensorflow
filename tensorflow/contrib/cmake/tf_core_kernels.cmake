@@ -109,6 +109,8 @@ add_dependencies(tf_core_kernels tf_core_cpu)
 
 if(WIN32)
   target_compile_options(tf_core_kernels PRIVATE /MP)
+endif()
+
   if (tensorflow_ENABLE_GPU)
     set_source_files_properties(${tf_core_gpu_kernels_srcs} PROPERTIES CUDA_SOURCE_PROPERTY_FORMAT OBJ)
     set(tf_core_gpu_kernels_lib tf_core_gpu_kernels)
@@ -119,4 +121,3 @@ if(WIN32)
     )
     add_dependencies(${tf_core_gpu_kernels_lib} tf_core_cpu)
   endif()
-endif()

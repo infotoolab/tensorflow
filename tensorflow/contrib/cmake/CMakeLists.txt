@@ -144,7 +144,7 @@ if(UNIX)
 endif()
 
 if (tensorflow_ENABLE_GPU)
-  if (WIN32)
+  #if (WIN32)
     find_package(CUDA 8.0 REQUIRED)
 
     # by default we assume compute cabability 3.5 and 5.2. If you change this change it in
@@ -157,8 +157,11 @@ if (tensorflow_ENABLE_GPU)
 
     # add cudnn
     include_directories(${CUDNN_HOME})
-    set(CUDA_LIBRARIES ${CUDA_LIBRARIES} ${CUDNN_HOME}/lib/x64/cudnn.lib)
-
+	if(WIN32)
+		set(CUDA_LIBRARIES ${CUDA_LIBRARIES} ${CUDNN_HOME}/lib/x64/cudnn.lib)
+	else()
+		set(CUDA_LIBRARIES ${CUDA_LIBRARIES} ${CUDA_TOOLKIT_TARGET_DIR}/lib64/libcudnn_static.a)
+	endif()
     # create cuda_config.h
     FILE(WRITE ${tensorflow_source_dir}/third_party/gpus/cuda/cuda_config.h
       "#ifndef CUDA_CUDA_CONFIG_H_\n"
@@ -181,7 +184,7 @@ if (tensorflow_ENABLE_GPU)
     include_directories(${tensorflow_source_dir}/third_party/gpus)
     # add cuda libraries to tensorflow_EXTERNAL_LIBRARIES
     list(APPEND tensorflow_EXTERNAL_LIBRARIES ${CUDA_LIBRARIES})
-  endif()
+  #endif()
 endif()
 
 # Let's get to work!
@@ -190,9 +193,9 @@ include(tf_tools.cmake)
 # NOTE: Disabled until issue #3996 is fixed.
 # include(tf_stream_executor.cmake)
 if (tensorflow_ENABLE_GPU)
-  if (WIN32)
+  #if (WIN32)
     include(tf_stream_executor.cmake)
-  endif()
+  #endif()
 endif()
 
 include(tf_core_cpu.cmake)

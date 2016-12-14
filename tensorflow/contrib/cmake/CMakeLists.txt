@@ -156,6 +156,9 @@ if (tensorflow_ENABLE_GPU)
     add_definitions(-DGOOGLE_CUDA=1 -DTF_EXTRA_CUDA_CAPABILITIES=3.5,5.2)
 
     # add cudnn
+	if(NOT WIN32)
+		set(CUDNN_HOME ${CUDA_TOOLKIT_TARGET_DIR} )
+	endif()
     include_directories(${CUDNN_HOME})
 	include_directories(${CUDA_TOOLKIT_TARGET_DIR}/../)
 	include_directories(${CUDA_TOOLKIT_TARGET_DIR}/include)

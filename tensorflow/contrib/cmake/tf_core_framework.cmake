@@ -103,6 +103,7 @@ set(tf_proto_text_srcs
     "tensorflow/core/framework/versions.proto"
     "tensorflow/core/lib/core/error_codes.proto"
     "tensorflow/core/protobuf/config.proto"
+    "tensorflow/core/protobuf/debug.proto"
     "tensorflow/core/protobuf/tensor_bundle.proto"
     "tensorflow/core/protobuf/saver.proto"
     "tensorflow/core/util/memmapped_file_system.proto"
@@ -174,6 +175,10 @@ list(REMOVE_ITEM tf_core_platform_default_srcs ${tf_core_lib_test_srcs})
 add_library(tf_core_lib OBJECT ${tf_core_lib_srcs})
 add_library(tf_core_lib_platform OBJECT ${tf_core_lib_platform_srcs})
 add_library(tf_core_lib_default OBJECT ${tf_core_platform_default_srcs})
+
+message(${tf_core_lib_srcs} \n  ${tf_core_lib_platform_srcs}  \n ${tf_core_platform_default_srcs})
+
+
 add_dependencies(tf_core_lib_platform ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)
 add_dependencies(tf_core_lib_default ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)
 add_dependencies(tf_core_lib ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)

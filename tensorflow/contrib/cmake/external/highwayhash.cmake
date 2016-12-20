@@ -1,6 +1,6 @@
 include (ExternalProject)
 
-set(highwayhash_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/highwayhash)
+set(highwayhash_INCLUDE_DIR ${highwayhash_BUILD}/highwayhash)
 set(highwayhash_URL https://github.com/google/highwayhash.git)
 set(highwayhash_TAG be5edafc2e1a455768e260ccd68ae7317b6690ee)
 set(highwayhash_BUILD ${CMAKE_CURRENT_BINARY_DIR}/highwayhash/src/highwayhash)
@@ -15,10 +15,8 @@ add_custom_target(highwayhash_copy_headers_to_destination
     DEPENDS highwayhash_create_destination_dir)
 
 if(WIN32)
-  set(highwayhash_HEADERS "${highwayhash_BUILD}/highwayhash/*.h")
   set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/highwayhash.lib)
 else()
-  set(highwayhash_HEADERS "${highwayhash_BUILD}/highwayhash/*.h")
   if(CMAKE_BUILD_TYPE)
     set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/libhighwayhash.a)
   else()
@@ -38,10 +36,4 @@ ExternalProject_Add(highwayhash
         -DCMAKE_BUILD_TYPE:STRING=Release
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
         -DCMAKE_INSTALL_PREFIX:STRING=${highwayhash_INSTALL})
-
-
-foreach(header_file ${highwayhash_HEADERS})
-	  add_custom_command(TARGET highwayhash_copy_headers_to_destination PRE_BUILD
-	      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${header_file} ${highwayhash_INCLUDE_DIR}/highwayhash/)
-endforeach()
 

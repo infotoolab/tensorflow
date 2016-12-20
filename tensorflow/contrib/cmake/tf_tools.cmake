@@ -16,6 +16,9 @@ add_executable(${proto_text}
 	
 )
 
+
+
+
 target_link_libraries(${proto_text} PUBLIC
   ${tensorflow_EXTERNAL_LIBRARIES}
   tf_protos_cc

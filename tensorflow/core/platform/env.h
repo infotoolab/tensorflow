@@ -191,7 +191,8 @@ class Env {
   /// \brief Returns whether the given path is a directory or not.
   /// Typical return codes (not guaranteed exhaustive):
   ///  * OK - The path exists and is a directory.
-  ///  * FAILED_PRECONDITION - The path exists and is not a directory.
+  ///  * 
+  /// _PRECONDITION - The path exists and is not a directory.
   ///  * NOT_FOUND - The path entry does not exist.
   ///  * PERMISSION_DENIED - Insufficient permissions.
   ///  * UNIMPLEMENTED - The file factory doesn't support directories.
@@ -203,6 +204,10 @@ class Env {
   /// \brief Renames file src to target. If target already exists, it will be
   /// replaced.
   Status RenameFile(const string& src, const string& target);
+
+  /// \brief Returns the absolute path of the current executable. It resolves
+  /// symlinks if there is any.
+  string GetExecutablePath();
 
   // TODO(jeff,sanjay): Add back thread/thread-pool support if needed.
   // TODO(jeff,sanjay): if needed, tighten spec so relative to epoch, or

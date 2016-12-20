@@ -66,7 +66,7 @@ static_assert(sizeof(WavHeader) ==
               "TF_PACKED does not work.");
 
 inline int16 FloatToInt16Sample(float data) {
-  constexpr float kMultiplier = 1.0f * (1 << 15);
+  constexpr float kMultiplier = 1 * (1 << 15);
   return std::min<float>(std::max<float>(roundf(data * kMultiplier), kint16min),
                          kint16max);
 }

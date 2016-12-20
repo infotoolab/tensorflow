@@ -8,7 +8,7 @@ set(highwayhash_INSTALL ${CMAKE_CURRENT_BINARY_DIR}/highwayhash/install)
 
 # put highwayhash includes in the directory where they are expected
 add_custom_target(highwayhash_create_destination_dir
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${highwayhash_INCLUDE_DIR}/highwayhash
+    COMMAND ${CMAKE_COMMAND} -E make_directory  ${highwayhash_BUILD}/highwayhash
     DEPENDS highwayhash)
 
 add_custom_target(highwayhash_copy_headers_to_destination

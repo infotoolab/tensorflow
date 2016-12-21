@@ -176,7 +176,6 @@ add_library(tf_core_lib OBJECT ${tf_core_lib_srcs})
 add_library(tf_core_lib_platform OBJECT ${tf_core_lib_platform_srcs})
 add_library(tf_core_lib_default OBJECT ${tf_core_platform_default_srcs})
 
-message(${tf_core_lib_srcs} \n  ${tf_core_lib_platform_srcs}  \n ${tf_core_platform_default_srcs})
 
 
 add_dependencies(tf_core_lib_platform ${tensorflow_EXTERNAL_DEPENDENCIES} tf_protos_cc)

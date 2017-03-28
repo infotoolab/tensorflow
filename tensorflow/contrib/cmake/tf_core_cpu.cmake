@@ -45,6 +45,9 @@ file(GLOB_RECURSE tf_core_cpu_exclude_srcs
     "${tensorflow_source_dir}/tensorflow/core/grappler/inputs/trivial_test_graph_input_yielder.cc"
 )
 list(REMOVE_ITEM tf_core_cpu_srcs ${tf_core_cpu_exclude_srcs})
+list(REMOVE_ITEM tf_core_cpu_grappler_srcs ${tf_core_cpu_exclude_srcs})
+list(REMOVE_ITEM tf_core_cpu_grappler_child_srcs ${tf_core_cpu_exclude_srcs})
+
 
 # We need to include stubs for the GPU tracer, which are in the exclude glob.
 list(APPEND tf_core_cpu_srcs

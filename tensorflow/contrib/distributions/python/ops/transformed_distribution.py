@@ -19,9 +19,9 @@ from __future__ import print_function
 
 import numpy as np
 
-from tensorflow.contrib.distributions.python.ops import bijector as bijectors
 from tensorflow.contrib.distributions.python.ops import distribution as distributions
 from tensorflow.contrib.distributions.python.ops import distribution_util
+from tensorflow.contrib.distributions.python.ops.bijectors import identity as identity_lib
 from tensorflow.python.framework import constant_op
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
@@ -200,7 +200,7 @@ class TransformedDistribution(distributions.Distribution):
   ds = tf.contrib.distributions
   log_normal = ds.TransformedDistribution(
     distribution=ds.Normal(loc=mu, scale=sigma),
-    bijector=ds.bijector.Exp(),
+    bijector=ds.bijectors.Exp(),
     name="LogNormalTransformedDistribution")
   ```
 
@@ -210,7 +210,7 @@ class TransformedDistribution(distributions.Distribution):
   ds = tf.contrib.distributions
   log_normal = ds.TransformedDistribution(
     distribution=ds.Normal(loc=mu, scale=sigma),
-    bijector=ds.bijector.Inline(
+    bijector=ds.bijectors.Inline(
       forward_fn=tf.exp,
       inverse_fn=tf.log,
       inverse_log_det_jacobian_fn=(
@@ -224,7 +224,7 @@ class TransformedDistribution(distributions.Distribution):
   ds = tf.contrib.distributions
   normal = ds.TransformedDistribution(
     distribution=ds.Normal(loc=0, scale=1),
-    bijector=ds.bijector.ScaleAndShift(loc=mu, scale=sigma, event_ndims=0),
+    bijector=ds.bijectors.ScaleAndShift(loc=mu, scale=sigma, event_ndims=0),
     name="NormalTransformedDistribution")
   ```
 
@@ -291,7 +291,7 @@ class TransformedDistribution(distributions.Distribution):
       self._empty = constant_op.constant([], dtype=dtypes.int32, name="empty")
 
       if bijector is None:
-        bijector = bijectors.Identity(validate_args=validate_args)
+        bijector = identity_lib.Identity(validate_args=validate_args)
 
       # We will keep track of a static and dynamic version of
       # self._is_{batch,event}_override. This way we can do more prior to graph
@@ -337,7 +337,6 @@ class TransformedDistribution(distributions.Distribution):
     self._bijector = bijector
     super(TransformedDistribution, self).__init__(
         dtype=self._distribution.dtype,
-        is_continuous=self._distribution.is_continuous,
         reparameterization_type=self._distribution.reparameterization_type,
         validate_args=validate_args,
         allow_nan_stats=self._distribution.allow_nan_stats,
@@ -412,7 +411,8 @@ class TransformedDistribution(distributions.Distribution):
     return self.bijector.forward(x)
 
   def _log_prob(self, y):
-    x, ildj = self.bijector.inverse_and_inverse_log_det_jacobian(y)
+    x = self.bijector.inverse(y)
+    ildj = self.bijector.inverse_log_det_jacobian(y)
     x = self._maybe_rotate_dims(x, rotate_right=True)
     log_prob = self.distribution.log_prob(x)
     if self._is_maybe_event_override:
@@ -424,7 +424,8 @@ class TransformedDistribution(distributions.Distribution):
     return log_prob
 
   def _prob(self, y):
-    x, ildj = self.bijector.inverse_and_inverse_log_det_jacobian(y)
+    x = self.bijector.inverse(y)
+    ildj = self.bijector.inverse_log_det_jacobian(y)
     x = self._maybe_rotate_dims(x, rotate_right=True)
     prob = self.distribution.prob(x)
     if self._is_maybe_event_override:
@@ -464,8 +465,7 @@ class TransformedDistribution(distributions.Distribution):
     return self.distribution.survival_function(x)
 
   def _entropy(self):
-    if (not self.distribution.is_continuous or
-        not self.bijector.is_constant_jacobian):
+    if not self.bijector.is_constant_jacobian:
       raise NotImplementedError("entropy is not implemented")
     # Suppose Y = g(X) where g is a diffeomorphism and X is a continuous rv. It
     # can be shown that:

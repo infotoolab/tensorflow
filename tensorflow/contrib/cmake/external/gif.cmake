@@ -19,6 +19,7 @@ if(WIN32)
       URL ${gif_URL}
       URL_HASH ${gif_HASH}
       PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patches/gif/CMakeLists.txt ${gif_BUILD}
+
       INSTALL_DIR ${gif_INSTALL}
       DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
       CMAKE_CACHE_ARGS
@@ -29,7 +30,11 @@ if(WIN32)
 
   ExternalProject_Add_Step(gif copy_unistd
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
+<<<<<<< HEAD
           ${CMAKE_CURRENT_SOURCE_DIR}/patches/gif/unistd.h ${gif_BUILD}/lib/unistd.h
+=======
+          ${CMAKE_SOURCE_DIR}/patches/gif/unistd.h ${gif_BUILD}/lib/unistd.h
+>>>>>>> master
       DEPENDEES patch
       DEPENDERS build
   )

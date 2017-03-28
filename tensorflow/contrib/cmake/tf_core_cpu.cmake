@@ -12,10 +12,10 @@ file(GLOB_RECURSE tf_core_cpu_srcs
     "${tensorflow_source_dir}/tensorflow/core/distributed_runtime/server_lib.cc"
     "${tensorflow_source_dir}/tensorflow/core/graph/*.h"
     "${tensorflow_source_dir}/tensorflow/core/graph/*.cc"
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.h"
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.cc"
+   # "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
+   # "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
+   # "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.h"
+   # "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.cc"
     "${tensorflow_source_dir}/tensorflow/core/public/*.h"
 )
 

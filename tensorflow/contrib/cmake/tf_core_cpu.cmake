@@ -12,18 +12,20 @@ file(GLOB_RECURSE tf_core_cpu_srcs
     "${tensorflow_source_dir}/tensorflow/core/distributed_runtime/server_lib.cc"
     "${tensorflow_source_dir}/tensorflow/core/graph/*.h"
     "${tensorflow_source_dir}/tensorflow/core/graph/*.cc"
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.h"
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.cc"
     "${tensorflow_source_dir}/tensorflow/core/public/*.h"
 )
 
-file(GLOB tf_core_cpu_grappler_srcs
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
-)
+file(GLOB_RECURSE tf_core_cpu_srcs_grappler_cost "${tensorflow_source_dir}/tensorflow/core/grappler/costs/*.cc")
+file(GLOB_RECURSE tf_core_cpu_srcs_grappler_inputs "${tensorflow_source_dir}/tensorflow/core/grappler/inputs/*.cc")
 
-file(GLOB_RECURSE tf_core_cpu_grappler_child_srcs
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.h"
-    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.cc"
-)
+
+list(REMOVE_ITEM tf_core_cpu_srcs ${tf_core_cpu_srcs_grappler_cost})
+list(REMOVE_ITEM tf_core_cpu_srcs ${tf_core_cpu_srcs_grappler_inputs})
+
 
 
 file(GLOB_RECURSE tf_core_cpu_exclude_srcs
@@ -45,10 +47,7 @@ file(GLOB_RECURSE tf_core_cpu_exclude_srcs
     "${tensorflow_source_dir}/tensorflow/core/grappler/inputs/trivial_test_graph_input_yielder.cc"
 )
 list(REMOVE_ITEM tf_core_cpu_srcs ${tf_core_cpu_exclude_srcs})
-list(REMOVE_ITEM tf_core_cpu_grappler_srcs ${tf_core_cpu_exclude_srcs})
-list(REMOVE_ITEM tf_core_cpu_grappler_child_srcs ${tf_core_cpu_exclude_srcs})
-list(REMOVE_ITEM tf_core_cpu_grappler_child_srcs ${tf_core_cpu_grappler_srcs})
-
+list(REMOVE_ITEM tf_core_cpu_srcs_grappler_inputs ${tf_core_cpu_exclude_srcs})
 
 # We need to include stubs for the GPU tracer, which are in the exclude glob.
 list(APPEND tf_core_cpu_srcs
@@ -73,12 +72,11 @@ if (tensorflow_ENABLE_GPU)
 endif()
 
 add_library(tf_core_cpu OBJECT ${tf_core_cpu_srcs})
-add_library(tf_core_cpu_grappler OBJECT ${tf_core_cpu_grappler_srcs})
-add_library(tf_core_cpu_grappler_child OBJECT ${tf_core_cpu_grappler_child_srcs})
+add_library(tf_core_cpu_grappler_costs OBJECT ${tf_core_cpu_srcs_grappler_cost})
+add_library(tf_core_cpu_grappler_inputs OBJECT ${tf_core_cpu_srcs_grappler_inputs})
 
-
-add_dependencies(tf_core_cpu_grappler tf_core_framework)
-add_dependencies(tf_core_cpu_grappler_child tf_core_framework)
 add_dependencies(tf_core_cpu tf_core_framework)
-add_dependencies(tf_core_cpu tf_core_cpu_grappler tf_core_cpu_grappler_child)
+add_dependencies(tf_core_cpu_grappler_costs tf_core_framework)
+add_dependencies(tf_core_cpu_grappler_inputs tf_core_framework)
+add_dependencies(tf_core_cpu tf_core_cpu_grappler_cost tf_core_cpu_grappler_inputs)
 

@@ -12,12 +12,19 @@ file(GLOB_RECURSE tf_core_cpu_srcs
     "${tensorflow_source_dir}/tensorflow/core/distributed_runtime/server_lib.cc"
     "${tensorflow_source_dir}/tensorflow/core/graph/*.h"
     "${tensorflow_source_dir}/tensorflow/core/graph/*.cc"
-   # "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
-   # "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
-   # "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.h"
-   # "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.cc"
     "${tensorflow_source_dir}/tensorflow/core/public/*.h"
 )
+
+file(GLOB_RECURSE tf_core_cpu_grappler_srcs
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
+)
+
+file(GLOB_RECURSE tf_core_cpu_grappler_child_srcs
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.h"
+    "${tensorflow_source_dir}/tensorflow/core/grappler/*/*.cc"
+)
+
 
 file(GLOB_RECURSE tf_core_cpu_exclude_srcs
     "${tensorflow_source_dir}/tensorflow/cc/saved_model/*test*.h"
@@ -62,4 +69,12 @@ if (tensorflow_ENABLE_GPU)
 endif()
 
 add_library(tf_core_cpu OBJECT ${tf_core_cpu_srcs})
+add_library(tf_core_cpu_grappler OBJECT ${tf_core_cpu_grappler_srcs})
+add_library(tf_core_cpu_grappler_child OBJECT ${tf_core_cpu_grappler_child_srcs})
+
+
+add_dependencies(tf_core_cpu_grappler tf_core_framework)
+add_dependencies(tf_core_cpu_grappler_child tf_core_framework)
 add_dependencies(tf_core_cpu tf_core_framework)
+add_dependencies(tf_core_cpu tf_core_cpu_grappler tf_core_cpu_grappler_child)
+

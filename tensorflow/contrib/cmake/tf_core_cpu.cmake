@@ -15,7 +15,7 @@ file(GLOB_RECURSE tf_core_cpu_srcs
     "${tensorflow_source_dir}/tensorflow/core/public/*.h"
 )
 
-file(GLOB_RECURSE tf_core_cpu_grappler_srcs
+file(GLOB tf_core_cpu_grappler_srcs
     "${tensorflow_source_dir}/tensorflow/core/grappler/*.h"
     "${tensorflow_source_dir}/tensorflow/core/grappler/*.cc"
 )

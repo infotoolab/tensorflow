@@ -78,5 +78,5 @@ add_library(tf_core_cpu_grappler_inputs OBJECT ${tf_core_cpu_srcs_grappler_input
 add_dependencies(tf_core_cpu tf_core_framework)
 add_dependencies(tf_core_cpu_grappler_costs tf_core_framework)
 add_dependencies(tf_core_cpu_grappler_inputs tf_core_framework)
-add_dependencies(tf_core_cpu tf_core_cpu_grappler_cost tf_core_cpu_grappler_inputs)
+add_dependencies(tf_core_cpu tf_core_cpu_grappler_costs tf_core_cpu_grappler_inputs)
 

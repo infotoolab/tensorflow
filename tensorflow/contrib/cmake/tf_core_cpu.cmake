@@ -47,6 +47,7 @@ file(GLOB_RECURSE tf_core_cpu_exclude_srcs
 list(REMOVE_ITEM tf_core_cpu_srcs ${tf_core_cpu_exclude_srcs})
 list(REMOVE_ITEM tf_core_cpu_grappler_srcs ${tf_core_cpu_exclude_srcs})
 list(REMOVE_ITEM tf_core_cpu_grappler_child_srcs ${tf_core_cpu_exclude_srcs})
+list(REMOVE_ITEM tf_core_cpu_grappler_child_srcs ${tf_core_cpu_grappler_srcs})
 
 
 # We need to include stubs for the GPU tracer, which are in the exclude glob.

@@ -70,7 +70,7 @@ if(NOT WIN32)
       list(APPEND ${HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${REL_DIR}/${FIL_WE}.pb.h")
       if(NOT CMKAE_BUILD_TYPE)
         set(_external_config_type Release)
-      else()
+      endif()
 
       add_custom_command(
         OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${REL_DIR}/${FIL_WE}.grpc.pb.cc"

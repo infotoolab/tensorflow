@@ -1238,10 +1238,7 @@ py_test(
         ":random_ops",
         ":resource_variable_ops",
         ":session",
-<<<<<<< HEAD
-=======
         ":test_ops",
->>>>>>> github/master
         ":variables",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python/eager:context",

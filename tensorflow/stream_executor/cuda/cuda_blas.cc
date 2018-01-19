@@ -379,14 +379,8 @@ class ScopedCublasPointerMode {
 };
 
 #if CUDA_VERSION >= 9000
-<<<<<<< HEAD
-// cuBLAS has interfaces that permit computations to use the Tensor Cores
-// available in Volta hardware. This must be enabled via the
-// cublasGet/SetMathMode APIs.
-=======
 // cuBLAS has interfaces that permit computations to use the Volta hardware.
 // This must be enabled via the cublasGet/SetMathMode APIs.
->>>>>>> github/master
 //
 // This helper sets the cuBLAS math mode to a desired value for a cuBLAS call
 // you are about to perform in a given scope.

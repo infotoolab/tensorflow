@@ -200,7 +200,6 @@ file(GLOB tf_core_platform_srcs
     "${tensorflow_source_dir}/tensorflow/core/framework/resource_handle.cc"
     )
 
-list(APPEND tf_core_lib_srcs ${tf_core_platform_srcs})
 
 file(GLOB tf_core_platform_default_srcs
 "${tensorflow_source_dir}/tensorflow/core/platform/default/*.h"

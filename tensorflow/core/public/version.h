@@ -24,7 +24,11 @@ limitations under the License.
 
 // TF_VERSION_SUFFIX is non-empty for pre-releases (e.g. "-alpha", "-alpha.1",
 // "-beta", "-rc", "-rc.1")
+<<<<<<< HEAD
 #define TF_VERSION_SUFFIX "-rc1"
+=======
+#define TF_VERSION_SUFFIX "-rc0"
+>>>>>>> github/master
 
 #define TF_STR_HELPER(x) #x
 #define TF_STR(x) TF_STR_HELPER(x)
@@ -91,10 +95,13 @@ limitations under the License.
 // 24. Deprecate lookup ops (v1) ops in favor of v2 (30may2017)
 // 25. Deprecate stack (v1) ops in favor of v2 (2017/6/15).
 // 25. Deprecate RandomPoisson (v1) ops in favor of v2 (2017/10/25).
+// 26. Add a bool 'stripped_default_attrs' to MetaInfoDef indicating
+//     whether default-valued attrs have been stripped from the nodes in the
+//     GraphDef. (7dec2017)
 
 #define TF_GRAPH_DEF_VERSION_MIN_PRODUCER 0
 #define TF_GRAPH_DEF_VERSION_MIN_CONSUMER 0
-#define TF_GRAPH_DEF_VERSION 24
+#define TF_GRAPH_DEF_VERSION 25
 
 // Checkpoint compatibility versions (the versions field in SavedSliceMeta).
 //

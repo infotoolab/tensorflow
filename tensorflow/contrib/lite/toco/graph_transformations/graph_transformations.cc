@@ -136,7 +136,9 @@ bool GraphTransformationsPass(int increment, Model* model,
                               const GraphTransformationsSet& transformations) {
   CHECK(increment == 1 || increment == -1);
   bool changed = false;
-  CHECK(!model->operators.empty());
+  if (model->operators.empty()) {
+    return false;
+  }
   int op_index = increment == 1 ? 0 : model->operators.size() - 1;
   while (true) {
     bool changed_now = false;
@@ -145,23 +147,28 @@ bool GraphTransformationsPass(int increment, Model* model,
       CHECK(!changed_now);
       CHECK(transformation->Messages().empty());
       changed_now = transformation->Run(model, op_index);
-      if (changed_now) {
-        DumpGraphvizVideoFrame(*model);
-        CHECK(!model->operators.empty());
-        op_index = std::min<int>(op_index, model->operators.size() - 1);
-        // Uncomment for debugging
-        // CheckInvariants(*model);
-      }
       const char* made_a_change_msg =
           changed_now ? "made a change" : "did NOT make a change";
       const int log_level =
           changed_now ? kLogLevelModelChanged : kLogLevelModelUnchanged;
+      if (transformation->Messages().empty()) {
+        VLOG(log_level) << transformation->Name() << " " << made_a_change_msg
+                        << " at op_index=" << op_index << "/"
+                        << model->operators.size() - 1;
+      }
       for (const string& message : transformation->Messages()) {
         VLOG(log_level) << transformation->Name() << " " << made_a_change_msg
                         << " at op_index=" << op_index << "/"
                         << model->operators.size() - 1 << ": " << message;
       }
       transformation->ClearMessages();
+      if (changed_now) {
+        DumpGraphvizVideoFrame(*model);
+        if (model->operators.empty()) return true;
+        op_index = std::min<int>(op_index, model->operators.size() - 1);
+        // Uncomment for debugging
+        // CheckInvariants(*model);
+      }
       if (changed_now) {
         break;
       }

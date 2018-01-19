@@ -802,8 +802,10 @@ void ConvertTensorFlowReshapeOperator(const Model& model,
   *reshape_op->add_input() = src_op.inputs[1];
   (*reshape_op->mutable_attr())["T"].set_type(DT_FLOAT);
   const auto& shape_array = model.GetArray(src_op.inputs[1]);
-  CHECK(shape_array.data_type == ArrayDataType::kInt32);
-  CHECK(shape_array.buffer != nullptr);
+  QCHECK(shape_array.data_type == ArrayDataType::kInt32)
+      << "Only int32 shape is supported.";
+  QCHECK(shape_array.buffer != nullptr)
+      << "Shape inferred at runtime is not supported.";
   const auto& shape_data = shape_array.GetBuffer<ArrayDataType::kInt32>().data;
   CreateReshapeShapeTensorConst(src_op.inputs[1], shape_data, tensorflow_graph);
 }
@@ -899,13 +901,15 @@ tensorflow::DataType GetTensorFlowDataType(const Model& model,
                                            const string& array_name) {
   auto& dtype = model.GetArray(array_name).data_type;
   CHECK(dtype == ArrayDataType::kFloat || dtype == ArrayDataType::kInt32 ||
-        dtype == ArrayDataType::kUint8);
+        dtype == ArrayDataType::kUint8 || dtype == ArrayDataType::kInt64);
   if (dtype == ArrayDataType::kFloat) {
     return tensorflow::DT_FLOAT;
   } else if (dtype == ArrayDataType::kInt32) {
     return tensorflow::DT_INT32;
   } else if (dtype == ArrayDataType::kUint8) {
     return tensorflow::DT_UINT8;
+  } else if (dtype == ArrayDataType::kInt64) {
+    return tensorflow::DT_INT64;
   } else {
     LOG(FATAL) << "Wrong data type";
   }
@@ -947,6 +951,22 @@ void ConvertGatherOperator(const Model& model, const GatherOperator& src_op,
   (*gather_op->mutable_attr())["Tindices"].set_type(DT_INT32);
   const auto params_type = GetTensorFlowDataType(model, src_op.inputs[0]);
   (*gather_op->mutable_attr())["Tparams"].set_type(params_type);
+}
+
+void ConvertArgMaxOperator(const Model& model, const ArgMaxOperator& src_op,
+                           GraphDef* tensorflow_graph) {
+  auto* argmax_op = tensorflow_graph->add_node();
+  argmax_op->set_op("ArgMax");
+  argmax_op->set_name(src_op.outputs[0]);
+  CHECK_EQ(src_op.inputs.size(), 2);
+  *argmax_op->add_input() = src_op.inputs[0];
+  *argmax_op->add_input() = src_op.inputs[1];
+  (*argmax_op->mutable_attr())["T"].set_type(
+      GetTensorFlowDataType(model, src_op.inputs[0]));
+  (*argmax_op->mutable_attr())["Tidx"].set_type(
+      GetTensorFlowDataType(model, src_op.inputs[1]));
+  (*argmax_op->mutable_attr())["output_type"].set_type(
+      GetTensorFlowDataType(model, src_op.outputs[0]));
 }
 
 void ConvertResizeBilinearOperator(const Model& model,
@@ -1495,6 +1515,9 @@ void ConvertOperator(const Model& model, const Operator& src_op,
   } else if (src_op.type == OperatorType::kSlice) {
     ConvertSliceOperator(model, static_cast<const SliceOperator&>(src_op),
                          tensorflow_graph);
+  } else if (src_op.type == OperatorType::kArgMax) {
+    ConvertArgMaxOperator(model, static_cast<const ArgMaxOperator&>(src_op),
+                          tensorflow_graph);
   } else {
     LOG(FATAL) << "Unhandled operator type " << OperatorTypeName(src_op.type);
   }

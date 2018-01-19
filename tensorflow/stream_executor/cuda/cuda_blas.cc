@@ -379,9 +379,14 @@ class ScopedCublasPointerMode {
 };
 
 #if CUDA_VERSION >= 9000
+<<<<<<< HEAD
 // cuBLAS has interfaces that permit computations to use the Tensor Cores
 // available in Volta hardware. This must be enabled via the
 // cublasGet/SetMathMode APIs.
+=======
+// cuBLAS has interfaces that permit computations to use the Volta hardware.
+// This must be enabled via the cublasGet/SetMathMode APIs.
+>>>>>>> github/master
 //
 // This helper sets the cuBLAS math mode to a desired value for a cuBLAS call
 // you are about to perform in a given scope.
@@ -1854,7 +1859,11 @@ bool CUDABlas::DoBlasGemm(
   stream->parent()->GetDeviceDescription().cuda_compute_capability(&cc_major,
                                                                    &cc_minor);
 
+<<<<<<< HEAD
   // GPUs < sm_70 don't support tensor cores
+=======
+  // GPUs < sm_70 don't support Volta hardware.
+>>>>>>> github/master
   if (cc_major >= 7 && TensorOpMathEnabled()) {
     use_tensor_ops = true;
   }

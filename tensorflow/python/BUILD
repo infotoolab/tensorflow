@@ -74,6 +74,7 @@ py_library(
         ":io_ops",
         ":layers",
         ":lib",
+        ":list_ops",
         ":math_ops",
         ":metrics",
         ":nn",
@@ -171,7 +172,21 @@ tf_py_test(
     name = "flags_test",
     size = "small",
     srcs = ["platform/flags_test.py"],
-    additional_deps = [":platform"],
+    additional_deps = [
+        ":client_testlib",
+        ":platform",
+    ],
+)
+
+tf_py_test(
+    name = "stacktrace_handler_test",
+    size = "small",
+    srcs = ["platform/stacktrace_handler_test.py"],
+    additional_deps = [
+        ":client_testlib",
+        ":platform",
+    ],
+    tags = ["no_windows"],
 )
 
 tf_py_test(
@@ -381,6 +396,7 @@ tf_cc_shared_object(
     }),
     deps = [
         "//tensorflow/core:framework_headers_lib",
+        "//third_party/eigen3",
         "@protobuf_archive//:protobuf_headers",
     ],
 )
@@ -1113,6 +1129,7 @@ py_test(
         ":variables",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python/eager:context",
+        "//tensorflow/python/eager:function",
     ],
 )
 
@@ -1221,6 +1238,10 @@ py_test(
         ":random_ops",
         ":resource_variable_ops",
         ":session",
+<<<<<<< HEAD
+=======
+        ":test_ops",
+>>>>>>> github/master
         ":variables",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python/eager:context",
@@ -1234,6 +1255,7 @@ py_test(
     srcs = ["framework/dtypes_test.py"],
     main = "framework/dtypes_test.py",
     srcs_version = "PY2AND3",
+    tags = ["no_windows"],
     deps = [
         ":framework_for_generated_wrappers",
         ":framework_test_lib",
@@ -1248,12 +1270,12 @@ py_test(
     name = "op_def_library_test",
     size = "small",
     srcs = ["framework/op_def_library_test.py"],
-    main = "framework/op_def_library_test.py",
     srcs_version = "PY2AND3",
     deps = [
         ":framework_for_generated_wrappers",
         ":framework_test_lib",
         ":platform_test",
+        ":test_ops",
     ],
 )
 
@@ -1404,6 +1426,10 @@ tf_gen_op_wrapper_private_py(
 
 tf_gen_op_wrapper_private_py(
     name = "resource_variable_ops_gen",
+)
+
+tf_gen_op_wrapper_private_py(
+    name = "list_ops_gen",
 )
 
 tf_gen_op_wrapper_private_py(
@@ -1765,6 +1791,7 @@ py_library(
         ":math_ops",
         ":nn_ops",
         ":random_ops",
+        "//third_party/py/numpy",
     ],
 )
 
@@ -1923,6 +1950,15 @@ py_library(
 )
 
 py_library(
+    name = "list_ops",
+    srcs = ["ops/list_ops.py"],
+    srcs_version = "PY2AND3",
+    deps = [
+        ":list_ops_gen",
+    ],
+)
+
+py_library(
     name = "nn",
     srcs = [
         "ops/nn.py",
@@ -2041,6 +2077,7 @@ py_library(
     deps = [
         ":array_ops",
         ":control_flow_ops",
+        ":control_flow_util",
         ":framework_for_generated_wrappers",
         ":math_ops",
         ":rnn_cell",
@@ -2347,6 +2384,8 @@ py_library(
         ":platform",
         ":util",
         ":variable_scope",
+        "//tensorflow/python/eager:context",
+        "//tensorflow/python/eager:function",
     ],
 )
 
@@ -3025,6 +3064,7 @@ tf_cuda_library(
         ":safe_ptr",
         ":test_ops_kernels",
         "//tensorflow/c:c_api",
+        "//tensorflow/c:c_api_internal",
         "//tensorflow/c:tf_status_helper",
         "//tensorflow/core",
         "//tensorflow/core:all_kernels",
@@ -3074,6 +3114,7 @@ tf_py_wrap_cc(
         "lib/io/py_record_reader.i",
         "lib/io/py_record_writer.i",
         "platform/base.i",
+        "platform/stacktrace_handler.i",
         "pywrap_tfe.i",
         "training/quantize_training.i",
         "training/server_lib.i",
@@ -3463,6 +3504,20 @@ cuda_py_test(
     ],
 )
 
+cuda_py_test(
+    name = "virtual_gpu_test",
+    size = "small",
+    srcs = ["client/virtual_gpu_test.py"],
+    additional_deps = [
+        ":client",
+        ":client_testlib",
+        ":framework_for_generated_wrappers",
+        ":math_ops",
+        "//tensorflow/core:protos_all_py",
+    ],
+    tags = ["noguitar"],
+)
+
 py_test(
     name = "graph_util_test",
     size = "small",
@@ -3485,6 +3540,7 @@ py_test(
     size = "small",
     srcs = ["lib/core/bfloat16_test.py"],
     srcs_version = "PY2AND3",
+    tags = ["no_windows"],
     deps = [
         ":client_testlib",
         ":lib",
@@ -3696,6 +3752,7 @@ cuda_py_test(
     srcs = ["training/session_manager_test.py"],
     additional_deps = [
         ":array_ops",
+        ":control_flow_ops",
         ":client",
         ":client_testlib",
         ":errors",
@@ -4378,13 +4435,37 @@ py_test(
         "grappler/item_test.py",
     ],
     srcs_version = "PY2AND3",
-    tags = ["no_pip"],  # tf_optimizer is not available in pip.
+    tags = [
+        "grappler",
+        "no_pip",  # tf_optimizer is not available in pip.
+    ],
     deps = [
         ":client_testlib",
         ":framework_for_generated_wrappers",
         ":math_ops",
         ":tf_item",
         "//tensorflow/core:protos_all_py",
+    ],
+)
+
+py_test(
+    name = "datasets_test",
+    size = "small",
+    srcs = [
+        "grappler/datasets_test.py",
+    ],
+    srcs_version = "PY2AND3",
+    tags = [
+        "grappler",
+        "no_pip",  # tf_optimizer is not available in pip.
+    ],
+    deps = [
+        ":array_ops",
+        ":client_testlib",
+        ":framework_for_generated_wrappers",
+        ":tf_item",
+        "//tensorflow/core:protos_all_py",
+        "//tensorflow/python/data",
     ],
 )
 
@@ -4401,20 +4482,23 @@ py_library(
     ],
 )
 
-py_test(
+cuda_py_test(
     name = "cluster_test",
     size = "small",
     srcs = [
         "grappler/cluster_test.py",
     ],
-    srcs_version = "PY2AND3",
-    tags = ["no_pip"],  # tf_optimizer is not available in pip.
-    deps = [
+    additional_deps = [
         ":client_testlib",
         ":framework_for_generated_wrappers",
         ":tf_cluster",
         ":tf_item",
         "//tensorflow/core:protos_all_py",
+    ],
+    shard_count = 10,
+    tags = [
+        "grappler",
+        "no_pip",  # tf_optimizer is not available in pip.
     ],
 )
 
@@ -4435,12 +4519,13 @@ py_test(
     name = "tf_optimizer_test",
     size = "small",
     srcs = [
-        "grappler/cluster_test.py",
-        "grappler/item_test.py",
         "grappler/tf_optimizer_test.py",
     ],
     srcs_version = "PY2AND3",
-    tags = ["no_pip"],  # tf_optimizer is not available in pip.
+    tags = [
+        "grappler",
+        "no_pip",  # tf_optimizer is not available in pip.
+    ],
     deps = [
         ":client_testlib",
         ":framework_for_generated_wrappers",
@@ -4458,6 +4543,9 @@ py_test(
         "grappler/memory_optimizer_test.py",
     ],
     srcs_version = "PY2AND3",
+    tags = [
+        "grappler",
+    ],
     deps = [
         ":client_testlib",
         ":framework_for_generated_wrappers",
@@ -4492,13 +4580,17 @@ cuda_py_test(
         ":nn",
         ":ops",
         ":random_ops",
+        ":state_ops",
         ":tf_cluster",
         ":tf_optimizer",
         ":training",
         "//third_party/py/numpy",
         "//tensorflow/core:protos_all_py",
     ],
-    tags = ["manual"],
+    shard_count = 10,
+    tags = [
+        "grappler",
+    ],
 )
 
 py_library(
@@ -4533,7 +4625,10 @@ py_test(
     size = "small",
     srcs = ["grappler/cost_analyzer_test.py"],
     srcs_version = "PY2AND3",
-    tags = ["no_pip"],
+    tags = [
+        "grappler",
+        "no_pip",
+    ],
     deps = [
         ":array_ops",
         ":client_testlib",
@@ -4565,7 +4660,10 @@ py_test(
     size = "small",
     srcs = ["grappler/model_analyzer_test.py"],
     srcs_version = "PY2AND3",
-    tags = ["no_pip"],
+    tags = [
+        "grappler",
+        "no_pip",
+    ],
     deps = [
         ":array_ops",
         ":client_testlib",

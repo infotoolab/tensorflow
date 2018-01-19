@@ -46,7 +46,6 @@ else()
       BUILD_IN_SOURCE 1
       PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patches/fft2d/CMakeLists.txt ${fft2d_BUILD}/src/fft2d/CMakeLists.txt
       INSTALL_DIR ${fft2d_INSTALL}
-      INSTALL_COMMAND echo
-      BUILD_COMMAND $(MAKE))
+      INSTALL_COMMAND echo)
     
 endif()

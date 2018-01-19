@@ -14,68 +14,58 @@
 # ==============================================================================
 """Implements text_summary in TensorFlow, with TensorBoard support.
 
-The text_summary is basically a wrapper around the generic tensor_summary,
-and it uses a TextSummaryPluginAsset class to record which tensor_summaries
-are readable by the TensorBoard text plugin.
+The text_summary is a wrapper around the generic tensor_summary that takes a
+string-type tensor and emits a TensorSummary op with SummaryMetadata that
+notes that this summary is textual data for the TensorBoard text plugin.
 """
 
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import json
-
+from tensorflow.core.framework import summary_pb2
 from tensorflow.python.framework import dtypes
 from tensorflow.python.ops.summary_ops import tensor_summary
-from tensorflow.python.summary import plugin_asset
+
+PLUGIN_NAME = "text"
 
 
 def text_summary(name, tensor, collections=None):
   """Summarizes textual data.
 
   Text data summarized via this plugin will be visible in the Text Dashboard
-  in TensorBoard.
+  in TensorBoard. The standard TensorBoard Text Dashboard will render markdown
+  in the strings, and will automatically organize 1d and 2d tensors into tables.
+  If a tensor with more than 2 dimensions is provided, a 2d subarray will be
+  displayed along with a warning message. (Note that this behavior is not
+  intrinsic to the text summary api, but rather to the default TensorBoard text
+  plugin.)
 
   Args:
     name: A name for the generated node. Will also serve as a series name in
       TensorBoard.
-    tensor: a scalar string-type Tensor to summarize.
+    tensor: a string-type Tensor to summarize.
     collections: Optional list of ops.GraphKeys.  The collections to add the
       summary to.  Defaults to [_ops.GraphKeys.SUMMARIES]
 
   Returns:
-    A  TensorSummary op that is configured so that TensorBoard will recognize
+    A TensorSummary op that is configured so that TensorBoard will recognize
     that it contains textual data. The TensorSummary is a scalar `Tensor` of
     type `string` which contains `Summary` protobufs.
 
   Raises:
-    ValueError: If tensor has the wrong shape or type.
+    ValueError: If tensor has the wrong type.
   """
   if tensor.dtype != dtypes.string:
     raise ValueError("Expected tensor %s to have dtype string, got %s" %
                      (tensor.name, tensor.dtype))
 
-  if tensor.shape.ndims != 0:
-    raise ValueError("Expected tensor %s to be scalar, has shape %s" %
-                     (tensor.name, tensor.shape))
-
-  t_summary = tensor_summary(name, tensor, collections)
-  text_assets = plugin_asset.get_plugin_asset(TextSummaryPluginAsset)
-  text_assets.register_tensor(t_summary.op.name)
+  summary_metadata = summary_pb2.SummaryMetadata(
+      plugin_data=summary_pb2.SummaryMetadata.PluginData(
+          plugin_name=PLUGIN_NAME))
+  t_summary = tensor_summary(
+      name=name,
+      tensor=tensor,
+      summary_metadata=summary_metadata,
+      collections=collections)
   return t_summary
-
-
-class TextSummaryPluginAsset(plugin_asset.PluginAsset):
-  """Provides a registry of text summaries for the TensorBoard text plugin."""
-  plugin_name = "tensorboard_text"
-
-  def __init__(self):
-    self._tensor_names = []
-
-  def register_tensor(self, name):
-    """Register a new Tensor Summary name as containing textual data."""
-    self._tensor_names.append(name)
-
-  def assets(self):
-    """Store the tensors registry in a file called tensors.json."""
-    return {"tensors.json": json.dumps(self._tensor_names)}

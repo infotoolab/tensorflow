@@ -19,7 +19,8 @@ set(lmdb_URL https://mirror.bazel.build/github.com/LMDB/lmdb/archive/LMDB_0.9.19
 set(lmdb_HASH SHA256=108532fb94c6f227558d45be3f3347b52539f0f58290a7bb31ec06c462d05326)
 set(lmdb_BUILD ${CMAKE_BINARY_DIR}/lmdb/src/lmdb)
 set(lmdb_INSTALL ${CMAKE_BINARY_DIR}/lmdb/install)
-
+file(COPY  ${lmdb_BUILD})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/patches/lmdb/CMakeLists.txt ${lmdb_BUILD}/CMakeLists.txt COPYONLY)
 ExternalProject_Add(lmdb
     PREFIX lmdb
     URL ${lmdb_URL}

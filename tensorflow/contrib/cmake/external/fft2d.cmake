@@ -36,7 +36,7 @@ if(WIN32)
           -DCMAKE_VERBOSE_MAKEFILE:BOOL=OFF
           -DCMAKE_INSTALL_PREFIX:STRING=${fft2d_INSTALL})
 else()
-  set(fft2d_STATIC_LIBRARIES ${fft2d_BUILD}/src/fft2d/libfft2d.a)
+  set(fft2d_STATIC_LIBRARIES ${fft2d_BUILD}/src/fft2d/$<CONFIG>/libfft2d.a)
 
   ExternalProject_Add(fft2d
       PREFIX fft2d

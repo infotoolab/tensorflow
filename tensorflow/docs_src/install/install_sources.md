@@ -361,17 +361,10 @@ Invoke `pip install` to install that pip package.
 The filename of the `.whl` file depends on your platform.
 For example, the following command will install the pip package
 
-<<<<<<< HEAD
-for TensorFlow 1.5.0rc1 on Linux:
-
-<pre>
-$ <b>sudo pip install /tmp/tensorflow_pkg/tensorflow-1.5.0rc1-py2-none-any.whl</b>
-=======
 for TensorFlow 1.5.0rc0 on Linux:
 
 <pre>
 $ <b>sudo pip install /tmp/tensorflow_pkg/tensorflow-1.5.0rc0-py2-none-any.whl</b>
->>>>>>> github/master
 </pre>
 
 ## Validate your installation

@@ -153,8 +153,6 @@ class BackpropTest(test.TestCase):
     opt.apply_gradients([(grad, embedding)])
     self.assertAllClose(expected, embedding.read_value())
 
-<<<<<<< HEAD
-=======
   def testImplicitGradOrdering(self):
     v0 = resource_variable_ops.ResourceVariable(1.0)
     v1 = resource_variable_ops.ResourceVariable(2.0)
@@ -169,7 +167,6 @@ class BackpropTest(test.TestCase):
     self.assertTrue(ordered_variables[0] is v0)
     self.assertTrue(ordered_variables[1] is v1)
 
->>>>>>> github/master
   @test_util.assert_no_new_tensors
   def testGradientNone(self):
 

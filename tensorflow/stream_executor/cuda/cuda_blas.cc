@@ -1859,11 +1859,7 @@ bool CUDABlas::DoBlasGemm(
   stream->parent()->GetDeviceDescription().cuda_compute_capability(&cc_major,
                                                                    &cc_minor);
 
-<<<<<<< HEAD
-  // GPUs < sm_70 don't support tensor cores
-=======
   // GPUs < sm_70 don't support Volta hardware.
->>>>>>> github/master
   if (cc_major >= 7 && TensorOpMathEnabled()) {
     use_tensor_ops = true;
   }

@@ -115,11 +115,7 @@ Take the following steps to install TensorFlow with Virtualenv:
      TensorFlow in the active Virtualenv is as follows:
 
      <pre> $ <b>pip3 install --upgrade \
-<<<<<<< HEAD
-     https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc1-py2-none-any.whl</b></pre>
-=======
      https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc0-py2-none-any.whl</b></pre>
->>>>>>> github/master
 
 If you encounter installation problems, see
 [Common Installation Problems](#common-installation-problems).
@@ -242,11 +238,7 @@ take the following steps:
      issue the following command:
 
      <pre> $ <b>sudo pip3 install --upgrade \
-<<<<<<< HEAD
-     https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc1-py2-none-any.whl</b> </pre>
-=======
      https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc0-py2-none-any.whl</b> </pre>
->>>>>>> github/master
 
      If the preceding command fails, see
      [installation problems](#common-installation-problems).
@@ -355,11 +347,7 @@ Take the following steps to install TensorFlow in an Anaconda environment:
      TensorFlow for Python 2.7:
 
      <pre> (<i>targetDirectory</i>)$ <b>pip install --ignore-installed --upgrade \
-<<<<<<< HEAD
-     https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc1-py2-none-any.whl</b></pre>
-=======
      https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc0-py2-none-any.whl</b></pre>
->>>>>>> github/master
 
 
 <a name="ValidateYourInstallation"></a>
@@ -532,11 +520,7 @@ This section documents the relevant values for Mac OS installations.
 
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc1-py2-none-any.whl
-=======
 https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc0-py2-none-any.whl
->>>>>>> github/master
 </pre>
 
 
@@ -544,9 +528,5 @@ https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc0-py2-none-a
 
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc1-py3-none-any.whl
-=======
 https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-1.5.0rc0-py3-none-any.whl
->>>>>>> github/master
 </pre>

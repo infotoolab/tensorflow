@@ -52,12 +52,8 @@ limitations under the License.
    #undef REGISTER_PARTITION
 */
 
-<<<<<<< HEAD
-#if !defined(IS_MOBILE_PLATFORM) || defined(SUPPORT_SELECTIVE_REGISTRATION) || defined(NVIDIA_TEGRA)
-=======
 #if !defined(IS_MOBILE_PLATFORM) || defined(SUPPORT_SELECTIVE_REGISTRATION) || \
     defined(NVIDIA_TEGRA)
->>>>>>> github/master
 
 // All types are supported, so all macros are invoked.
 //

@@ -188,11 +188,7 @@ Take the following steps to install TensorFlow with Virtualenv:
      Virtualenv environment:
 
      <pre>(tensorflow)$ <b>pip3 install --upgrade \
-<<<<<<< HEAD
-     https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp34-cp34m-linux_x86_64.whl</b></pre>
-=======
      https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp34-cp34m-linux_x86_64.whl</b></pre>
->>>>>>> github/master
 
 If you encounter installation problems, see
 [Common Installation Problems](#common_installation_problems).
@@ -297,11 +293,7 @@ take the following steps:
 
      <pre>
      $ <b>sudo pip3 install --upgrade \
-<<<<<<< HEAD
-     https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp34-cp34m-linux_x86_64.whl</b>
-=======
      https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp34-cp34m-linux_x86_64.whl</b>
->>>>>>> github/master
      </pre>
 
      If this step fails, see
@@ -488,11 +480,7 @@ Take the following steps to install TensorFlow in an Anaconda environment:
 
      <pre>
      (tensorflow)$ <b>pip install --ignore-installed --upgrade \
-<<<<<<< HEAD
-     https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp34-cp34m-linux_x86_64.whl</b></pre>
-=======
      https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp34-cp34m-linux_x86_64.whl</b></pre>
->>>>>>> github/master
 
 
 <a name="ValidateYourInstallation"></a>
@@ -660,22 +648,14 @@ This section documents the relevant values for Linux installations.
 CPU only:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp27-none-linux_x86_64.whl
-=======
 https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp27-none-linux_x86_64.whl
->>>>>>> github/master
 </pre>
 
 
 GPU support:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc1-cp27-none-linux_x86_64.whl
-=======
 https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc0-cp27-none-linux_x86_64.whl
->>>>>>> github/master
 </pre>
 
 Note that GPU support requires the NVIDIA hardware and software described in
@@ -687,36 +667,10 @@ Note that GPU support requires the NVIDIA hardware and software described in
 CPU only:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp34-cp34m-linux_x86_64.whl
-=======
-https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp34-cp34m-linux_x86_64.whl
->>>>>>> github/master
-</pre>
-
-
-GPU support:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc1-cp34-cp34m-linux_x86_64.whl
-=======
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc0-cp34-cp34m-linux_x86_64.whl
->>>>>>> github/master
-</pre>
-
 Note that GPU support requires the NVIDIA hardware and software described in
-[NVIDIA requirements to run TensorFlow with GPU support](#NVIDIARequirements).
-
-
-### Python 3.5
-
-CPU only:
-
-<pre>
-<<<<<<< HEAD
 https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp35-cp35m-linux_x86_64.whl
-=======
 https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp35-cp35m-linux_x86_64.whl
 >>>>>>> github/master
 </pre>
@@ -725,15 +679,6 @@ https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp35-cp3
 GPU support:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc1-cp35-cp35m-linux_x86_64.whl
-=======
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc0-cp35-cp35m-linux_x86_64.whl
->>>>>>> github/master
-</pre>
-
-
-Note that GPU support requires the NVIDIA hardware and software described in
 [NVIDIA requirements to run TensorFlow with GPU support](#NVIDIARequirements).
 
 ### Python 3.6
@@ -741,24 +686,6 @@ Note that GPU support requires the NVIDIA hardware and software described in
 CPU only:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc1-cp36-cp36m-linux_x86_64.whl
-=======
-https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.5.0rc0-cp36-cp36m-linux_x86_64.whl
->>>>>>> github/master
-</pre>
-
-
-GPU support:
 
 <pre>
-<<<<<<< HEAD
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc1-cp36-cp36m-linux_x86_64.whl
-=======
-https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0rc0-cp36-cp36m-linux_x86_64.whl
->>>>>>> github/master
-</pre>
-
-
-Note that GPU support requires the NVIDIA hardware and software described in
 [NVIDIA requirements to run TensorFlow with GPU support](#NVIDIARequirements).

@@ -643,10 +643,6 @@ py_test(
     srcs = ["cli/curses_ui_test.py"],
     srcs_version = "PY2AND3",
     tags = [
-<<<<<<< HEAD
-        "no_oss",
-=======
->>>>>>> github/master
         "no_windows",
     ],
     deps = [

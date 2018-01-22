@@ -242,7 +242,7 @@ include_directories(
 )
 
 
-add_definitions(-I$sysroot/include/malloc)
+add_definitions(-I$SYSROOT/include/malloc)
 
 if(tensorflow_ENABLE_SSL_SUPPORT)
   include(boringssl)

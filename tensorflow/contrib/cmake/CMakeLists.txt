@@ -239,9 +239,9 @@ include_directories(
     ${PROTOBUF_INCLUDE_DIRS}
     ${re2_INCLUDE_DIR}
     ${sqlite_INCLUDE_DIR}
-    ${CMAKE_SYSROOT}/include/malloc
 )
 
+add_definitions(-I$sysroot/include/malloc)
 
 if(tensorflow_ENABLE_SSL_SUPPORT)
   include(boringssl)

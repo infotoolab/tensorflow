@@ -23,7 +23,10 @@ set(re2_TAG e7efc48)
 if(WIN32)
   set(re2_STATIC_LIBRARIES ${re2_BUILD}/$(Configuration)/re2.lib)
 else()
-  set(re2_STATIC_LIBRARIES ${re2_BUILD}/$<CONFIG>/libre2.a)
+  if(NOT ${CMAKE_BUILD_TYPE})
+    set(_external_config $<CONFIG>)
+  endif()
+  set(re2_STATIC_LIBRARIES ${re2_BUILD}/${_external_config}/libre2.a)
 endif()
 
 set(re2_HEADERS

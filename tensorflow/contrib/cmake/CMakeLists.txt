@@ -209,7 +209,7 @@ set(tensorflow_EXTERNAL_DEPENDENCIES
     jsoncpp
     farmhash_copy_headers_to_destination
     highwayhash_copy_headers_to_destination
-    nsync_copy_headers_to_destination
+    nsync
     protobuf
     eigen
     gemmlowp

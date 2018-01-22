@@ -204,6 +204,7 @@ if(WIN32 AND tensorflow_ENABLE_GPU)
   set_target_properties(tf_core_kernels_cpu_only PROPERTIES COMPILE_FLAGS ${target_compile_flags})
 endif(WIN32 AND tensorflow_ENABLE_GPU)
 
+source_group()
 add_library(tf_core_kernels OBJECT ${tf_core_kernels_srcs})
 add_dependencies(tf_core_kernels tf_core_cpu)
 

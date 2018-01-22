@@ -239,7 +239,7 @@ include_directories(
     ${PROTOBUF_INCLUDE_DIRS}
     ${re2_INCLUDE_DIR}
     ${sqlite_INCLUDE_DIR}
-    ${CMAKE_SYSROOT}/malloc
+    ${CMAKE_SYSROOT}/include/malloc
 )
 
 

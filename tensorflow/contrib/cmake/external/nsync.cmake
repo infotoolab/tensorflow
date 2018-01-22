@@ -14,19 +14,11 @@
 # ==============================================================================
 include (ExternalProject)
 
-set(nsync_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/nsync/public)
+set(nsync_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/nsync/install/include)
 set(nsync_URL https://github.com/google/nsync)
 set(nsync_TAG 8502189abfa44c249c01c2cad64e6ed660a9a668)
 set(nsync_BUILD ${CMAKE_CURRENT_BINARY_DIR}/nsync/src/nsync)
 set(nsync_INSTALL ${CMAKE_CURRENT_BINARY_DIR}/nsync/install)
-
-# put nsync includes in the directory where they are expected
-add_custom_target(nsync_create_destination_dir
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${nsync_INCLUDE_DIR}
-    DEPENDS nsync)
-
-add_custom_target(nsync_copy_headers_to_destination
-    DEPENDS nsync_create_destination_dir)
 
 if(WIN32)
   set(nsync_HEADERS "${nsync_BUILD}/public/*.h")
@@ -50,5 +42,4 @@ ExternalProject_Add(nsync
         -DCMAKE_INSTALL_PREFIX:STRING=${nsync_INSTALL}
 	-DNSYNC_LANGUAGE:STRING=c++11)
 
-add_custom_command(TARGET nsync_copy_headers_to_destination PRE_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory ${nsync_INSTALL}/include/ ${nsync_INCLUDE_DIR}/)
+

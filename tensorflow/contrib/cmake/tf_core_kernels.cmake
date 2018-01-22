@@ -71,10 +71,10 @@ if(tensorflow_BUILD_CONTRIB_KERNELS)
       "${tensorflow_source_dir}/tensorflow/contrib/cudnn_rnn/ops/cudnn_rnn_ops.cc"
       "${tensorflow_source_dir}/tensorflow/contrib/data/kernels/prefetching_kernels.cc"
       "${tensorflow_source_dir}/tensorflow/contrib/data/ops/prefetching_ops.cc"
-      "${tensorflow_source_dir}/tensorflow/contrib/factorization/kernels/clustering_ops.cc"
+      #"${tensorflow_source_dir}/tensorflow/contrib/factorization/kernels/clustering_ops.cc"
       "${tensorflow_source_dir}/tensorflow/contrib/factorization/kernels/masked_matmul_ops.cc"
       "${tensorflow_source_dir}/tensorflow/contrib/factorization/kernels/wals_solver_ops.cc"
-      "${tensorflow_source_dir}/tensorflow/contrib/factorization/ops/clustering_ops.cc"
+      #"${tensorflow_source_dir}/tensorflow/contrib/factorization/ops/clustering_ops.cc"
       "${tensorflow_source_dir}/tensorflow/contrib/factorization/ops/factorization_ops.cc"
       #"${tensorflow_source_dir}/tensorflow/contrib/ffmpeg/decode_audio_op.cc"
       #"${tensorflow_source_dir}/tensorflow/contrib/ffmpeg/encode_audio_op.cc"
@@ -204,7 +204,7 @@ if(WIN32 AND tensorflow_ENABLE_GPU)
   set_target_properties(tf_core_kernels_cpu_only PROPERTIES COMPILE_FLAGS ${target_compile_flags})
 endif(WIN32 AND tensorflow_ENABLE_GPU)
 
-source_group()
+
 add_library(tf_core_kernels OBJECT ${tf_core_kernels_srcs})
 add_dependencies(tf_core_kernels tf_core_cpu)
 

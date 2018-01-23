@@ -239,10 +239,11 @@ include_directories(
     ${PROTOBUF_INCLUDE_DIRS}
     ${re2_INCLUDE_DIR}
     ${sqlite_INCLUDE_DIR}
+    /usr/include/malloc/
 )
 
-
 add_definitions(-I$SYSROOT/usr/include/malloc)
+add_definitions(-include sys/time.h)
 
 if(tensorflow_ENABLE_SSL_SUPPORT)
   include(boringssl)

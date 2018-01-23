@@ -33,6 +33,11 @@ file(GLOB_RECURSE tf_core_cpu_srcs
     "${tensorflow_source_dir}/tensorflow/core/public/*.h"
 )
 
+set(TF_SOURCE_ROOT "${tensorflow_source_dir}/tensorflow/")
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL 3.8.0)
+  source_group(TREE ${TF_SOURCE_ROOT} FILES ${tf_core_cpu_srcs}) 
+endif()
+
 file(GLOB_RECURSE tf_core_cpu_srcs_grappler_cost "${tensorflow_source_dir}/tensorflow/core/grappler/costs/*.cc")
 file(GLOB_RECURSE tf_core_cpu_srcs_grappler_inputs "${tensorflow_source_dir}/tensorflow/core/grappler/inputs/*.cc")
 

@@ -76,6 +76,7 @@ file(GLOB_RECURSE tf_core_cpu_exclude_srcs
 list(REMOVE_ITEM tf_core_cpu_srcs ${tf_core_cpu_exclude_srcs})
 list(REMOVE_ITEM tf_core_cpu_srcs_grappler_inputs ${tf_core_cpu_exclude_srcs})
 list(REMOVE_ITEM tf_core_cpu_srcs_grappler_cost ${tf_core_cpu_exclude_srcs})
+list(REMOVE_ITEM tf_core_cpu_grappler_optimizers ${tf_core_cpu_exclude_srcs})
 
 
 if (tensorflow_ENABLE_GPU)

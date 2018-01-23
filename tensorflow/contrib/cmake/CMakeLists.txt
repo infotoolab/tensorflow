@@ -243,7 +243,9 @@ include_directories(
 )
 
 add_definitions(-I$SYSROOT/usr/include/malloc)
-add_definitions(-include sys/time.h)
+if(APPLE)
+  add_definitions(-include sys/time.h)
+endif()
 
 if(tensorflow_ENABLE_SSL_SUPPORT)
   include(boringssl)

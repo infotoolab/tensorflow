@@ -35,6 +35,7 @@ ExternalProject_Add(nsync
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
     BUILD_IN_SOURCE 1
     UPDATE_DISCONNECTED 1
+    BUILD_ALWAYS 0
     PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patches/nsync/CMakeLists.txt ${nsync_BUILD}
     INSTALL_DIR ${nsync_INSTALL}
     CMAKE_CACHE_ARGS

@@ -45,6 +45,7 @@ ExternalProject_Add(highwayhash
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
     BUILD_IN_SOURCE 1
     UPDATE_DISCONNECTED 1
+    BUILD_ALWAYS 0
     PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patches/highwayhash/CMakeLists.txt ${highwayhash_BUILD}
     INSTALL_DIR ${highwayhash_INSTALL}
     CMAKE_CACHE_ARGS

@@ -37,6 +37,7 @@ ExternalProject_Add(protobuf
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
     BUILD_IN_SOURCE 1
     UPDATE_DISCONNECTED 1
+    BUILD_ALWAYS 0
     SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/protobuf/src/protobuf
     CONFIGURE_COMMAND ${CMAKE_COMMAND} cmake/
         -Dprotobuf_BUILD_TESTS=OFF

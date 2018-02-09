@@ -25,11 +25,7 @@ set(jsoncpp_INCLUDES ${jsoncpp_BUILD})
 if(WIN32)
   set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/$(Configuration)/jsoncpp.lib)
 else()
-  if(CMAKE_BUILD_TYPE)
 	set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/libjsoncpp.a)
-  else()
-    set(jsoncpp_STATIC_LIBRARIES ${jsoncpp_BUILD}/$<CONFIG>/libjsoncpp.a)
-  endif()
 endif()
 # We only need jsoncpp.h in external/jsoncpp/jsoncpp/jsoncpp.h
 # For the rest, we'll just add the build dir as an include dir.
@@ -41,7 +37,7 @@ ExternalProject_Add(jsoncpp
     PREFIX jsoncpp
     GIT_REPOSITORY ${jsoncpp_URL}
     GIT_TAG ${jsoncpp_TAG}
-	
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
     BUILD_IN_SOURCE 1
     UPDATE_DISCONNECTED 1

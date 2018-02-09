@@ -22,7 +22,7 @@ set(snappy_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/snappy/src/snappy)
 if(WIN32)
     set(snappy_STATIC_LIBRARIES ${snappy_BUILD}/$(Configuration)/snappy.lib)
 else()
-    set(snappy_STATIC_LIBRARIES ${snappy_BUILD}/${CMAKE_CFG_INTDIR}/libsnappy.a)
+    set(snappy_STATIC_LIBRARIES ${snappy_BUILD}/libsnappy.a)
 endif()
 
 set(snappy_HEADERS
@@ -41,6 +41,7 @@ ExternalProject_Add(snappy
     LOG_DOWNLOAD ON
     LOG_CONFIGURE ON
     LOG_BUILD ON
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     CMAKE_CACHE_ARGS
         -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=${tensorflow_ENABLE_POSITION_INDEPENDENT_CODE}
         -DCMAKE_BUILD_TYPE:STRING=Release

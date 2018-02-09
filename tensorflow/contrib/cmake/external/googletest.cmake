@@ -24,7 +24,7 @@ if(WIN32)
       ${CMAKE_CURRENT_BINARY_DIR}/googletest/src/googletest/googletest/$(Configuration)/gtest.lib)
 else()
   set(googletest_STATIC_LIBRARIES
-      ${CMAKE_CURRENT_BINARY_DIR}/googletest/src/googletest/googletest/${CMAKE_BUILD_TYPE}/gtest.a)
+      ${CMAKE_CURRENT_BINARY_DIR}/googletest/src/googletest/googletest/gtest.a)
 endif()
 
 ExternalProject_Add(googletest
@@ -35,6 +35,7 @@ ExternalProject_Add(googletest
     BUILD_IN_SOURCE 1
     UPDATE_DISCONNECTED 1
     BUILD_ALWAYS 0
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     #PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_SOURCE_DIR}/patches/grpc/CMakeLists.txt ${GRPC_BUILD}
     INSTALL_COMMAND ""
     CMAKE_CACHE_ARGS

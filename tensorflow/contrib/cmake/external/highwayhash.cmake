@@ -31,11 +31,7 @@ add_custom_target(highwayhash_copy_headers_to_destination
 if(WIN32)
   set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/highwayhash.lib)
 else()
-  if(CMAKE_BUILD_TYPE)
     set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/libhighwayhash.a)
-  else()
-	set(highwayhash_STATIC_LIBRARIES ${highwayhash_BUILD}/$<CONFIG>/libhighwayhash.a)  
-  endif()	
 endif()
 
 ExternalProject_Add(highwayhash
@@ -47,6 +43,7 @@ ExternalProject_Add(highwayhash
     UPDATE_DISCONNECTED 1
     BUILD_ALWAYS 0
     PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patches/highwayhash/CMakeLists.txt ${highwayhash_BUILD}
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     INSTALL_DIR ${highwayhash_INSTALL}
     CMAKE_CACHE_ARGS
         -DCMAKE_BUILD_TYPE:STRING=Release

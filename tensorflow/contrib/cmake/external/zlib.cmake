@@ -25,14 +25,8 @@ if(WIN32)
       debug ${CMAKE_CURRENT_BINARY_DIR}/zlib/install/lib/zlibstaticd.lib
       optimized ${CMAKE_CURRENT_BINARY_DIR}/zlib/install/lib/zlibstatic.lib)
 else()
-  if(CMAKE_BUILD_TYPE)
 	  set(zlib_STATIC_LIBRARIES
 	      ${CMAKE_CURRENT_BINARY_DIR}/zlib/src/zlib/libz.a)
-  else()
-	  set(zlib_STATIC_LIBRARIES
-	      ${CMAKE_CURRENT_BINARY_DIR}/zlib/src/zlib/$<CONFIG>/libz.a)  
-  endif()
-  
 endif()
 
 set(ZLIB_HEADERS
@@ -49,6 +43,7 @@ ExternalProject_Add(zlib
     UPDATE_DISCONNECTED 1
     BUILD_ALWAYS 0
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     CMAKE_CACHE_ARGS
         -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=${tensorflow_ENABLE_POSITION_INDEPENDENT_CODE}
         -DCMAKE_BUILD_TYPE:STRING=Release

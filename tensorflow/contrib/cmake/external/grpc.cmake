@@ -26,17 +26,10 @@ if(WIN32)
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/Release/grpc_unsecure.lib
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/Release/gpr.lib)
 else()
-  if(CMAKE_BUILD_TYPE)
 	  set(grpc_STATIC_LIBRARIES
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgrpc++_unsecure.a
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgrpc_unsecure.a
       ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/libgpr.a)
-  else()
-    set(grpc_STATIC_LIBRARIES
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/Release/libgrpc++_unsecure.a
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/Release/libgrpc_unsecure.a
-      ${CMAKE_CURRENT_BINARY_DIR}/grpc/src/grpc/Release/libgpr.a)
-  endif()
 endif()
 
 add_definitions(-DGRPC_ARES=0)
@@ -52,6 +45,7 @@ ExternalProject_Add(grpc
     BUILD_ALWAYS 0
     BUILD_COMMAND ${CMAKE_COMMAND} --build . --config Release --target grpc++_unsecure
     COMMAND ${CMAKE_COMMAND} --build . --config Release --target grpc_cpp_plugin
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     INSTALL_COMMAND ""
     CMAKE_CACHE_ARGS
         -DCMAKE_BUILD_TYPE:STRING=Release

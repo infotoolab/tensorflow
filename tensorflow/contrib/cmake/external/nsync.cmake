@@ -37,6 +37,7 @@ ExternalProject_Add(nsync
     UPDATE_DISCONNECTED 1
     BUILD_ALWAYS 0
     PATCH_COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/patches/nsync/CMakeLists.txt ${nsync_BUILD}
+    CMAKE_GENERATOR ${EXTERNAL_CMAKE_GENERATOR}
     INSTALL_DIR ${nsync_INSTALL}
     CMAKE_CACHE_ARGS
         -DCMAKE_BUILD_TYPE:STRING=Release

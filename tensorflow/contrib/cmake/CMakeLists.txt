@@ -95,6 +95,11 @@ endfunction()
 # External dependencies
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/external)
 
+set(EXTERNAL_CMAKE_GENERATOR ${CMAKE_GENERATOR})
+if(CMAKE_GENERATOR MATCHES Xcode)
+  set(EXTERNAL_CMAKE_GENERATOR make)
+endif
+
 # Location where external projects will be downloaded
 set (DOWNLOAD_LOCATION "${CMAKE_CURRENT_BINARY_DIR}/downloads"
      CACHE PATH "Location where external projects will be downloaded.")

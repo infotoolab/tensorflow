@@ -99,7 +99,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/external)
 #as xcode generator will rebuild whole project
 set(EXTERNAL_CMAKE_GENERATOR ${CMAKE_GENERATOR})
 if(CMAKE_GENERATOR MATCHES Xcode)
-  set(EXTERNAL_CMAKE_GENERATOR make)
+  set(EXTERNAL_CMAKE_GENERATOR "Unix Makefiles")
 endif()
 
 

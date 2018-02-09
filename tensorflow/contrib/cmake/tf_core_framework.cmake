@@ -69,9 +69,10 @@ if(NOT WIN32)
       list(APPEND ${SRCS} "${CMAKE_CURRENT_BINARY_DIR}/${REL_DIR}/${FIL_WE}.pb.cc")
       list(APPEND ${HDRS} "${CMAKE_CURRENT_BINARY_DIR}/${REL_DIR}/${FIL_WE}.pb.h")
 
-      if(CMAKE_BUILD_TYPE)
-      else()
+      if(WIN32)
         set(TENSORFLOW_INT_DIR Release)
+      else()
+        set(TENSORFLOW_INT_DIR)
       endif()
       add_custom_command(
         OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${REL_DIR}/${FIL_WE}.grpc.pb.cc"

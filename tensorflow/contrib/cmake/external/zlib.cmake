@@ -17,7 +17,9 @@ include (ExternalProject)
 set(zlib_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/external/zlib_archive)
 set(ZLIB_URL https://github.com/madler/zlib)
 set(ZLIB_BUILD ${CMAKE_CURRENT_BINARY_DIR}/zlib/src/zlib)
+set(ZLIB_INSTALL_RAW ${CMAKE_CURRENT_BINARY_DIR}/zlib/install_raw)
 set(ZLIB_INSTALL ${CMAKE_CURRENT_BINARY_DIR}/zlib/install)
+
 set(ZLIB_TAG 50893291621658f355bc5b4d450a8d06a563053d)
 
 if(WIN32)
@@ -38,7 +40,7 @@ ExternalProject_Add(zlib
     PREFIX zlib
     GIT_REPOSITORY ${ZLIB_URL}
     GIT_TAG ${ZLIB_TAG}
-    INSTALL_DIR ${ZLIB_INSTALL}
+    INSTALL_DIR ${ZLIB_INSTALL_RAW}
     BUILD_IN_SOURCE 1
     UPDATE_DISCONNECTED 1
     BUILD_ALWAYS 0
@@ -47,7 +49,7 @@ ExternalProject_Add(zlib
     CMAKE_CACHE_ARGS
         -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=${tensorflow_ENABLE_POSITION_INDEPENDENT_CODE}
         -DCMAKE_BUILD_TYPE:STRING=Release
-        -DCMAKE_INSTALL_PREFIX:STRING=${ZLIB_INSTALL}
+        -DCMAKE_INSTALL_PREFIX:STRING=${ZLIB_INSTALL_RAW}
 )
 
 # put zlib includes in the directory where they are expected
@@ -62,3 +64,6 @@ foreach(header_file ${ZLIB_HEADERS})
     add_custom_command(TARGET zlib_copy_headers_to_destination PRE_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${header_file} ${zlib_INCLUDE_DIR})
 endforeach()
+
+
+add_copy_folder_command(zlib_copy_headers_to_destination ${ZLIB_INSTALL_RAW} ${ZLIB_INSTALL})

@@ -16,6 +16,12 @@ get_filename_component(tensorflow_source_dir ${tf_tf_source_dir} PATH)
 # CMake policies
 cmake_policy(SET CMP0022 NEW)
 
+function(add_copy_folder_command target src_folder dst_dir)
+  add_custom_command(TARGET ${target} PRE_BUILD
+    COMMAND ${CMAKE_COMMAND} -DSRC_FOLDER=${src_folder}  -DDST_DIR=${dst_dir}  -P ${CMAKE_CURRENT_SOURCE_DIR}/tools/copy_folder_if_different.cmake)
+endfunction()
+
+
 # Options
 option(tensorflow_VERBOSE "Enable for verbose output" OFF)
 option(tensorflow_ENABLE_SSL_SUPPORT "Enable boringssl support" OFF)

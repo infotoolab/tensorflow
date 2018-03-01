@@ -31,7 +31,7 @@ add_custom_target(highwayhash_copy_headers_to_destination
 if(WIN32)
   set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/highwayhash.lib)
 else()
-    set(highwayhash_STATIC_LIBRARIES ${highwayhash_INSTALL}/lib/libhighwayhash.a)
+    set(highwayhash_STATIC_LIBRARIES ${highwayhash_BUILD}/libhighwayhash.a)
 endif()
 
 ExternalProject_Add(highwayhash

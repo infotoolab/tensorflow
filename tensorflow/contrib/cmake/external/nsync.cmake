@@ -25,7 +25,7 @@ if(WIN32)
   set(nsync_STATIC_LIBRARIES ${nsync_INSTALL}/lib/nsync.lib)
 else()
   set(nsync_HEADERS "${nsync_BUILD}/public/*.h")
-  set(nsync_STATIC_LIBRARIES ${nsync_INSTALL}/lib/libnsync.a)
+  set(nsync_STATIC_LIBRARIES ${nsync_BUILD}/libnsync.a)
 endif()
 
 ExternalProject_Add(nsync
